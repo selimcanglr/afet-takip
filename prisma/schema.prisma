@@ -10,12 +10,106 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Article {
+model HelpCenter {
   id          Int       @id @default(autoincrement())
-  title       String    @unique
-  description String?
-  body        String
-  published   Boolean   @default(false)
+  currentVolunteers Volunteer[]
+  maxVolunteers Int
+  neededVolunteers NeededVolunteers[]
+  supplies Supplies[]
+  neededSupplies NeededSupplies[]
+  packedSupplies PackedSupplies[]
+  busiestHours Json? // TODO: {start, end}
+  openCloseInfo Json? // TODO: {open, close}
+  location Json? // TODO: {lat, lon}
+  contactInfo Json? // TODO: {phone, address, email}
+  additionalInfo String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+}
+
+model Volunteer {
+  id Int @id @default(autoincrement())
+  helpCenter HelpCenter @relation(fields: [helpCenterId], references: [id])
+  packedPackages Package[]
+  helpCenterId Int
+  firstName String
+  lastName String
+  displayName String
+  phone String
+  email String
+  workArea String  // TODO: Might be a special type rather than a string
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// A NeededVolunteers row represent how many volunteers are needed for a certain task, it does
+// not containt each and every individual like the volunteer table
+model NeededVolunteers {
+  id Int @id @default(autoincrement())
+  helpCenter HelpCenter @relation(fields: [helpCenterId], references: [id])
+  helpCenterId Int
+  quantity Int
+  workArea String // TODO: Might be a special type rather than a string
+  urgency String  // TODO: Might be a special type rather than a string
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Supplies {
+  id Int @id @default(autoincrement())
+  helpCenter HelpCenter @relation(fields: [helpCenterId], references: [id])
+  helpCenterId Int
+  supplyType String // TODO: Might be a special type rather than a string
+  quantity Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model NeededSupplies {
+  id Int @id @default(autoincrement())
+  helpCenter HelpCenter @relation(fields: [helpCenterId], references: [id])
+  helpCenterId Int
+  supplyType String // TODO: Might be a special type rather than a string
+  quantity Int
+  urgency String // TODO: Might be a special type rather than a string
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model PackedSupplies {
+  id Int @id @default(autoincrement())
+
+  origin HelpCenter @relation(fields: [helpCenterId], references: [id])
+  helpCenterId Int
+  
+  package Package @relation(fields: [packageId], references: [id])
+  packageId Int
+
+  supplyType String // TODO: Might be a special type rather than a string
+  quantity Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Package {
+  id Int @id @default(autoincrement())
+
+  supplies PackedSupplies[]
+  
+  packagedBy Volunteer @relation(fields: [volunteerId], references: [id])
+  volunteerId Int
+  
+  transportVehicle TransportVehicle @relation(fields: [vehicleId], references: [id])
+  vehicleId Int
+
+  depDest Json? // TODO: {departure, destination}
+  packageSize Float?
+  weight Float?
+}
+
+model TransportVehicle {
+  id Int @id @default(autoincrement())
+  packages Package[]
+  vehicleType String // TODO:
+  depDest Json? // TODO: {departure, destination}
 }
