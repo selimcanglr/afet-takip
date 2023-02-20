@@ -3,17 +3,22 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { SwaggerModule } from '@nestjs/swagger/dist';
 import { AppModule } from './app.module';
+import { HttpExceptionFilter } from './filters/http-exception-filter.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  // Global prefix
+  app.setGlobalPrefix('api/v1');
+
   // ValidationPipeline setup
   app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   // Swagger setup
   const config = new DocumentBuilder()
     .setTitle('afet-takip API Documentation')
-    .setDescription('afet Takip API')
+    .setDescription('afet-takip API')
     .setVersion('0.1')
     .build();
   const document = SwaggerModule.createDocument(app, config);
