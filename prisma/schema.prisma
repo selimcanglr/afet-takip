@@ -10,10 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// Add admin model
+
 model HelpCenter {
-  id          Int       @id @default(autoincrement())
+  id Int @id @default(autoincrement())
+  name String
   currentVolunteers Volunteer[]
-  maxVolunteers Int
+  maxVolunteers Int?
   neededVolunteers NeededVolunteers[]
   supplies Supplies[]
   neededSupplies NeededSupplies[]
@@ -25,6 +28,7 @@ model HelpCenter {
   additionalInfo String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+  // TODO: Add foreign key for admin
 }
 
 model Volunteer {
