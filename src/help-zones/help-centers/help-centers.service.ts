@@ -1,26 +1,45 @@
 import { Injectable } from '@nestjs/common';
+import { HelpCenter } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateHelpCenterDto } from './dto/create-help-center.dto';
 import { UpdateHelpCenterDto } from './dto/update-help-center.dto';
 
 @Injectable()
 export class HelpCentersService {
-  create(createHelpCenterDto: CreateHelpCenterDto) {
-    return 'This action adds a new helpCenter';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(createHelpCenterDto: CreateHelpCenterDto) {
+    return await this.prisma.helpCenter.create({
+      data: createHelpCenterDto,
+    });
   }
 
-  findAll() {
-    return `This action returns all helpCenters`;
+  async findAll() {
+    return await this.prisma.helpCenter.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} helpCenter`;
+  async findOne(id: number) {
+    return await this.prisma.helpCenter.findUnique({ where: { id } });
   }
 
-  update(id: number, updateHelpCenterDto: UpdateHelpCenterDto) {
-    return `This action updates a #${id} helpCenter`;
+  async update(id: number, updateHelpCenterDto: UpdateHelpCenterDto) {
+    return await this.prisma.helpCenter.update({
+      where: { id },
+      data: updateHelpCenterDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} helpCenter`;
+  async remove(id: number) {
+    return await this.prisma.helpCenter.delete({ where: { id } });
   }
+  async findAllOpen() {}
+
+  async findAllCurrentVolunteers() {}
+
+  async findAllSupplies() {}
+
+  async findAllPackedSupplies() {}
+
+  // TODO: Add to arrays, delete from arrays, reset arrays
+  // TODO: Get general information
 }
