@@ -1,9 +1,10 @@
 # afet-takip
+afet-takip is a centralized application designed to provide an intuitive environment for tracking the organization of volunteer help centers that are formed with the aim of sending supplies and equipment to disaster zones.
 
 ## Purpose
 The main purpose of this project is to provide an intuitive environment for tracking the organization of volunteer help centers that are formed with the aim of sending supplies and equipment to disaster zones. 
 
-Even though these centers are established with good intentions, their needs and organization go out of control over time as the size of the organization increases and managing it becomes more complex. There is also no way for volunteers who are willing to go to these help centers to know whether there is a need of volunteers, supply, or equipment. Therefore, both the volunteers and the centers unnecessarily lose time. After the Turkey - Syria earthquake in February 2023, in Turkey, we have seen examples of these issues on the first-hand. At the end, volunteers relied on external parties like WhatsApp, Google Spreadsheets to gain information about which help centers need volunteers and supply. Moreover they had questions like:
+Even though these centers are established with good intentions, their needs and organization go out of control over time as the size of the organization increases and managing it becomes more complex. There is also no way for volunteers who are willing to go to these help centers to know whether there is a need of volunteers, supply, or equipment. Therefore, both the volunteers and the centers unnecessarily lose time. After the Turkey - Syria earthquake in February 2023, in Turkey, we have seen first-hand examples of the difficulties faced by volunteers in gaining information about which help centers need volunteers and supplies.  At the end, volunteers relied on external parties like WhatsApp, Google Spreadsheets to gain information about which help centers need volunteers and supply. Moreover they had questions like:
   - Which help centers currently need help and where are they located at?
   - What kind of volunteers are they looking for?
   - How many volunteers are needed?
@@ -24,11 +25,11 @@ To avoid these issues and optimize the overall volunteering process, we decided 
 ### Installation steps
 1.  Clone this repository
     ```bash
-        git clone https://github.com/selimcanglr?tab=repositories
+    git clone https://github.com/selimcanglr?tab=repositories
     ```
 2. Install the dependencies using your favourite package manager (we will use npm)
     ```bash
-        npm install
+    npm install
     ```
 
 Following these steps will make the application ready to be run.
@@ -64,12 +65,20 @@ To run the application you need to make sure a few things. First of all, to be a
    ```bash
     docker-compose up
    ```
+4. Set up the database
+   ```bash
+    npx prisma migrate dev
+   ```
+5. Seed the database with some initial data (optional):
+    ```bash
+    npm run seed
+    ```
    This process might take some time for the first tiem of calling it because of the initialization process, but it should be quick after that.
-4. Then, run the application:
+6. Then, run the application:
    ```bash
     npm run start
    ```
-5. Voila! Your API is up and running (hopefully)!
+7. Voila! Your API is up and running (hopefully)!
 ## Resources
 
 
@@ -143,16 +152,17 @@ Duh. Throw them when necessary. Handle in controllers.
 `/src/help-zones` folder is reserved for the current phase of the project (that is the phase that aims to organize the help centers). All the necessary modules should be created inside it.
 
 ### File naming convention
-Filenames are separated by dashes, and they end with a dot continued by the type of the file. For example a controller file named help-center should be named as **"help-center.controller.ts"**
-
-Further examples can be found in `src/help-zones/help-centers`
+Filenames are separated by dashes, and they end with a dot continued by the type of the file. For example a controller file named help-center should be named as **"help-center.controller.ts"** Further examples can be found in `src/help-zones/help-centers`
 
 The schemes for the database are located in the `schema.prisma` file in the `/prisma` folder.
+
+If you don't think dashes are readable, go back to Java and those class names consisting of 15 meaningless buzzwords.
 
 ### Folder naming convention
 Use dashes to separate words. Be consistent. Make sure the name is understandable.
 
 ## Tools available
+Ooh boo boo, yes Nest have many useful tools. Unlike freaking Spring which doesn't even have a proper documentation so you work for hours and hours to handle freaking files.
 ### Prisma Studio
 You can use Prisma Studio to see the contents of the database in a user-friendly interface.
 
