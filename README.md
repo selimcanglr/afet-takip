@@ -69,36 +69,99 @@ To run the application you need to make sure a few things. First of all, to be a
    ```bash
     npm run start
    ```
+5. Voila! Your API is up and running (hopefully)!
 ## Resources
 
 
 ## Workflow and Main Concepts
-### Prisma
+### [Prisma](https://www.prisma.io/)
+Prisma is an ORM that helps us read from and write to the database without writing pure SQL queries. It is a powerful and popular tool but it may have its limitations. Or we might have difficulty trying to do complex tasks on it. But I doubt it. 
 
 ### Resource Generation
+You can use the `nest generate` command to generate nest modules, services, controllers, etc. 
+
+Most of the time you will want to use the following commands:
+```bash
+    npm generate module
+
+    npm generate resource
+
+    npm generate controller
+
+    npm generate service
+
+    npm generate filter
+
+    npm generate provider
+```
+
+A more detailed explanation can be found at the [Nest documentation](https://docs.nestjs.com/cli/usages#nest-generate).
 
 ### Controller-Service-Module Structure
+Nest is an opininated framework. It has certain ways for doing certain things. In terms of our general structure, we will use the Module-Controller-Service structure. [Controllers](https://docs.nestjs.com/controllers) interact directly with incoming HTTP requests and use necessary services to handle a specific request. Meaning that controllers receive all the HTTP requests and create the needed HTTP response, handle errors if necessary. 
+
+[Modules](https://docs.nestjs.com/modules) are a way of structuring the project in a more scalable way. 
 
 ### Data Transfer Objects (DTO)
+Name is clearly sufficient.
 
 ### Entities
+Jeez you pervert. Go and take a look at your Database Systems class.
 
 ### Validation
+There are useful libraries like `class-validator` and I forgot the other one's name that will help with validation.
 
 ### Handling/Throwing Errors
+As a beloved friend of mine said:
+> 'Cause the software brings errors, and the errors bring back, the errors bring back handling.
+
+Make sure you check all the pre-requisites of a certain endpoint. Throw errors if necessary.
+
 #### Approach to Throwing Errors
+Duh. Throw them when necessary. Handle in controllers.
 
 #### Error response Structure
+```
+// During development
+{
+  "status": 404,
+  "name": "NotFoundException",
+  "message": "Cannot GET /",
+  "method": "GET",
+  "path": "/",
+  "timestamp": "2023-02-28T10:57:34.281Z"
+}
 
+// During production
+{
+  "status": 404,
+  "message": "Cannot GET /",
+}
+```
 
 ## Filesystem
+`/src/help-zones` folder is reserved for the current phase of the project (that is the phase that aims to organize the help centers). All the necessary modules should be created inside it.
+
 ### File naming convention
+Filenames are separated by dashes, and they end with a dot continued by the type of the file. For example a controller file named help-center should be named as **"help-center.controller.ts"**
+
+Further examples can be found in `src/help-zones/help-centers`
+
+The schemes for the database are located in the `schema.prisma` file in the `/prisma` folder.
 
 ### Folder naming convention
+Use dashes to separate words. Be consistent. Make sure the name is understandable.
 
 ## Tools available
 ### Prisma Studio
+You can use Prisma Studio to see the contents of the database in a user-friendly interface.
+
+```
+    npx prisma studio
+```
 
 ### Swagger API Documentation
+Swagger API documentation can be reached by adding `/api` to the end of the API url. For example if the URL of the API is http://localhost:3000/, the documentation is located at http://localhost:3000/api
 
 ### Nest CLI
+Nest CLI is a powerful tool that lets you use the features of Nest in a fast manner. One example of the usage of Nest CLI is [creating resources, services, CRUD endpoints](#resource-generation).
