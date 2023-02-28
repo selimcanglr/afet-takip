@@ -10,7 +10,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Add admin model
+// TODO: Add admin model
 
 model HelpCenter {
   id Int @id @default(autoincrement())
